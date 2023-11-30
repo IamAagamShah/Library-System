@@ -1,0 +1,101 @@
+﻿@page
+@model BookHub.Pages.Book.IndexModel
+@{
+    ViewData["Title"] = "Books";
+}
+
+<h3 style="display: flex; justify-content: space-between; align-items: center;">
+    Book List
+    <a href="/Book/Create" class="btn-add">Add New Book</a>
+</h3>
+
+<div class="table-container">
+    <table class="book-table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Rating</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model.Books)
+            {
+                <tr>
+                    <td><img src="@book.Image" alt="Book Image" class="book-image" /></td>
+                    <td>@book.Title</td>
+                    <td>@book.Author</td>
+                    <td>@book.Rating</td>
+                    <td>
+                        <a href="/Book/Details/@book.Id" class="btn-details">Details</a>
+                        <a href="/Book/Edit/@book.Id" class="btn-edit">Edit</a>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@book.Id">
+                            <button type="submit" class="btn-delete">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    /* CSS styles for the table */
+    .table-container {
+        margin-top: 20px;
+    }
+
+    .book-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .book-table th, .book-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+    .book-image {
+        width: 150px;
+        height: 200px;
+    }
+
+    .btn-details, .btn-edit, .btn-delete, .btn-add {
+        display: inline-block;
+        margin-right: 5px;
+        padding: 5px 10px;
+        text-decoration: none;
+        color: #fff;
+        border-radius: 4px;
+    }
+
+    .btn-details {
+        background-color: #007bff;
+    }
+
+    .btn-edit {
+        background-color: #28a745;
+    }
+
+    .btn-delete {
+        background-color: #dc3545;
+    }
+
+    .btn-add {
+        background-color: #17a2b8;
+    }
+
+    .action-buttons {
+        margin-top: 20px;
+    }
+
+    h3 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+</style>

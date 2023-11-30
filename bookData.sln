@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bookData", "bookData\bookData.csproj", "{1EFF3992-35CD-46B6-BAC1-2196C1D42CD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookHubAPI", "BookHubAPI\BookHubAPI.csproj", "{613D03EA-5B23-4307-91D1-F9A4E555EB81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookHubAPI", "BookHubAPI\BookHubAPI.csproj", "{613D03EA-5B23-4307-91D1-F9A4E555EB81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookHub", "BookHub\BookHub.csproj", "{D79D4A4A-8E51-4E15-9D2F-1291B6078307}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{613D03EA-5B23-4307-91D1-F9A4E555EB81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{613D03EA-5B23-4307-91D1-F9A4E555EB81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{613D03EA-5B23-4307-91D1-F9A4E555EB81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D79D4A4A-8E51-4E15-9D2F-1291B6078307}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D79D4A4A-8E51-4E15-9D2F-1291B6078307}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D79D4A4A-8E51-4E15-9D2F-1291B6078307}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D79D4A4A-8E51-4E15-9D2F-1291B6078307}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
