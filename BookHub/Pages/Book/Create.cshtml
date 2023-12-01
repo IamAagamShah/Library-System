@@ -1,0 +1,21 @@
+﻿@page
+@model BookHub.Pages.Book.CreateModel
+@{
+    ViewData["Title"] = "Add Book";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post">
+    <div>
+        <label asp-for="Book.Title"></label>
+        <input asp-for="Book.Title" />
+    </div>
+    <div>
+        <label asp-for="Book.Author"></label>
+        <input asp-for="Book.Author" />
+    </div>
+    <!-- Other book properties -->
+
+    <button type="submit">Add Book</button>
+</form>

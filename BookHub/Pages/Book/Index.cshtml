@@ -6,7 +6,7 @@
 
 <h3 style="display: flex; justify-content: space-between; align-items: center;">
     Book List
-    <a href="/Book/Create" class="btn-add">Add New Book</a>
+    <a asp-page="./Create" class="btn-add">Add New Book</a>
 </h3>
 
 <div class="table-container">
@@ -24,16 +24,18 @@
             @foreach (var book in Model.Books)
             {
                 <tr>
-                    <td><img src="@book.Image" alt="Book Image" class="book-image" /></td>
+                    <!-- Make image clickable and link to the book's Link property -->
+                    <td><a href="@book.Link" target="_blank">
+                        <img src="@book.Image" alt="Book Image" class="book-image" />
+                        </a>
+                    </td>
                     <td>@book.Title</td>
                     <td>@book.Author</td>
                     <td>@book.Rating</td>
                     <td>
-                        <a href="/Book/Details/@book.Id" class="btn-details">Details</a>
-                        <a href="/Book/Edit/@book.Id" class="btn-edit">Edit</a>
-                        <form method="post" asp-page-handler="Delete" asp-route-id="@book.Id">
-                            <button type="submit" class="btn-delete">Delete</button>
-                        </form>
+                        <a asp-page="./Details" asp-route-id="@book.Id" class="btn-details">Details</a>
+                        <a asp-page="./Edit" asp-route-id="@book.Id" class="btn-edit">Edit</a>
+                        <a asp-page="./Delete" asp-route-id="@book.Id" class="btn-delete">Delete</a>
                     </td>
                 </tr>
             }

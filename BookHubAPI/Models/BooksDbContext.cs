@@ -6,7 +6,7 @@ namespace BookHubAPI.Models
 {
     public class BooksDbContext : DbContext
     {
-         public BooksDbContext(DbContextOptions<BooksDbContext> options) : base(options)
+        public BooksDbContext(DbContextOptions<BooksDbContext> options) : base(options)
         {
             // Other configuration or setup if needed
         }

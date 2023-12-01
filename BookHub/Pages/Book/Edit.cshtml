@@ -1,0 +1,80 @@
+﻿@page "{id}"
+@model EditModel
+@{
+    ViewData["Title"] = "Edit Book";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<form method="post">
+    <div>
+        <label asp-for="Book.Title"></label>
+        <input asp-for="Book.Title" />
+    </div>
+    <div>
+        <label asp-for="Book.Author"></label>
+        <input asp-for="Book.Author" />
+    </div>
+    <div>
+        <label asp-for="Book.Subtitle"></label>
+        <input asp-for="Book.Subtitle" />
+    </div>
+    <div>
+        <label asp-for="Book.Image"></label>
+        <input asp-for="Book.Image" />
+    </div>
+    <div>
+        <label asp-for="Book.ISBN"></label>
+        <input asp-for="Book.ISBN" />
+    </div>
+    <div>
+        <label asp-for="Book.Description"></label>
+        <textarea asp-for="Book.Description"></textarea>
+    </div>
+    <div>
+        <label asp-for="Book.Link"></label>
+        <input asp-for="Book.Link" />
+    </div>
+    <div>
+        <label asp-for="Book.PublishDate"></label>
+        <input asp-for="Book.PublishDate" />
+    </div>
+    <div>
+        <label asp-for="Book.PageCount"></label>
+        <input asp-for="Book.PageCount" />
+    </div>
+    <div>
+        <label asp-for="Book.Rating"></label>
+        <input asp-for="Book.Rating" />
+    </div>
+    <button type="submit">Save</button>
+</form>
+
+<style>
+    /* CSS styles for the form */
+    form div {
+        margin-bottom: 10px;
+    }
+
+    label {
+        display: block;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+        width: 100%;
+        padding: 5px;
+        font-size: 14px;
+    }
+
+    button {
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+</style>

@@ -1,0 +1,14 @@
+﻿@page "{id}"
+@model BookHub.Pages.Book.DetailsModel
+@{
+    ViewData["Title"] = "Book Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h4>Title: @Model.Book.Title</h4>
+    <p>Author: @Model.Book.Author</p>
+</div>
+
+<a asp-page="./Edit" asp-route-id="@Model.Book.Id">Edit</a>
