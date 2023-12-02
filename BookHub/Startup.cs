@@ -18,6 +18,13 @@
                 client.BaseAddress = new Uri("https://localhost:7274/api/Book/");
                 // Configure other HttpClient settings if needed
             });
+
+            services.AddHttpClient("ReviewsAPI", client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7274/api/Reviews/");
+                // Configure other HttpClient settings if needed
+            });
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

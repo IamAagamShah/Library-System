@@ -1,7 +1,10 @@
-﻿namespace BookHubAPI.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BookHubAPI.Models
 {
     public class BookDTO
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }

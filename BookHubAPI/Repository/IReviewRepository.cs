@@ -5,10 +5,9 @@ namespace BookHubAPI.Repository
 {
     public interface IReviewRepository
     {
-        Task<Review> GetReviewById(string id);
+        Task<Review> GetReviewById(string id, bool includeRevies);
         Task<Review> AddReview(Review review);
-        Task<Review> UpdateReview(string id, JsonPatchDocument<Review> patchDocument);
-        Task<Review> UpdateReview(string id, Review Review);
+        Task<Review> UpdateReview(string id, Review review);
         Task<bool> DeleteReview(string id);
     }
 }

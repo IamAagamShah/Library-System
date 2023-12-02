@@ -6,9 +6,20 @@ namespace BookHubAPI.Models
     {
         public ReviewsDbContext(DbContextOptions<ReviewsDbContext> options) : base(options)
         {
-            // Other configuration or setup if needed
+            
         }
         public DbSet<Review> Reviews { get; set; } // DbSet for the Book entity
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Review>()
+                .Property(r => r.RevId)
+                .ValueGeneratedOnAdd();
+
+            // Other configurations for your entities can go here...
+
+            base.OnModelCreating(modelBuilder);
+        }
 
     }
 }

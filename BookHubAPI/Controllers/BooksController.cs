@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Azure;
 using BookHubAPI.Models;
 using BookHubAPI.Repository;
@@ -17,10 +18,13 @@ namespace BookHubAPI.Controllers
     public class BookController : ControllerBase
     {
         private readonly IBookRepository _bookRepository;
-
-        public BookController(IBookRepository bookRepository)
+        private readonly IReviewRepository _reviewRepository;
+        private readonly IMapper _mapper;
+        public BookController(IBookRepository bookRepository, IReviewRepository reviewRepository, IMapper mapper)
         {
             _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
+            _reviewRepository = reviewRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -32,22 +36,29 @@ namespace BookHubAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Book>> GetBookById(string id)
+        public async Task<ActionResult<Book>> GetBookById(string id, bool includeReviews = false)
         {
-            var book = await _bookRepository.GetBookById(id);
+            var book = await _bookRepository.GetBookById(id, includeReviews);
             if (book == null)
             {
                 return NotFound();
+            }
+            if (includeReviews)
+            {
+                var reviews = _mapper.Map<BookDTO>(book);
+                return Ok(book);
             }
             return Ok(book);
         }
 
         [HttpPost]
         [Route("addbook")]
-        public async Task<ActionResult<Book>> AddBook(Book book)
+        public async Task<ActionResult<BookDTO>> AddBook(BookDTO bookDto)
         {
-            var addedBook = await _bookRepository.AddBook(book);
+            var books = _mapper.Map<Book>(bookDto);
+            var addedBook = await _bookRepository.AddBook(books);
             return CreatedAtAction(nameof(GetBookById), new { id = addedBook.Id }, addedBook);
+
         }
 
         [HttpPut("{id}")]
@@ -62,7 +73,8 @@ namespace BookHubAPI.Controllers
             {
                 return NotFound();
             }
-            return Ok(updatedBook);
+            var updatedBookDto = _mapper.Map<BookDTO>(updatedBook);
+            return Ok(updatedBookDto);
         }
 
         [HttpDelete("{id}")]

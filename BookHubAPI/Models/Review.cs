@@ -5,9 +5,8 @@ namespace BookHubAPI.Models
 {
     public class Review
     {
-        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string RevId { get; set; }
+        public int RevId { get; set; }
         public string Description { get; set; }
         public string Id { get; set; }
 

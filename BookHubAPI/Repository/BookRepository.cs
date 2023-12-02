@@ -1,4 +1,5 @@
-﻿using BookHubAPI.Models;
+﻿using AutoMapper;
+using BookHubAPI.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,10 +8,12 @@ namespace BookHubAPI.Repository
     public class BookRepository : IBookRepository
     {
         private readonly BooksDbContext _context;
+        private readonly IMapper _mapper;
 
-        public BookRepository(BooksDbContext context)
+        public BookRepository(BooksDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         public async Task<Book> PartialUpdateBookAsync(string id, Book book)
         {
@@ -32,19 +35,37 @@ namespace BookHubAPI.Repository
         {           return await _context.Books.ToListAsync();
         }
 
-        public async Task<Book> GetBookById(string id)
+        public async Task<Book> GetBookById(string id, bool includeRevies)
         {
-            return await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
+            IQueryable<Book> result;
+
+            if (includeRevies)
+            {
+                result = _context.Books.Include(c => c.Id).Where(c => c.Id == id);
+            }
+            else
+            {
+                result = _context.Books.Where(c => c.Id == id);
+            }
+            return await result.FirstOrDefaultAsync();
+            //return await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
         }
 
         public async Task<Book> AddBook(Book book)
         {
+            _context.Database.OpenConnection();
+            _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Reviews ON");
+
             _context.Books.Add(book);
             await _context.SaveChangesAsync();
+
+            _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Reviews OFF");
+            _context.Database.CloseConnection();
+
             return book;
         }
 
-   
+
         public async Task<Book> UpdateBook(string id, Book book)
         {
             _context.Entry(book).State = EntityState.Modified;
@@ -61,5 +82,7 @@ namespace BookHubAPI.Repository
             await _context.SaveChangesAsync();
             return true;
         }
+
+      
     }
 }
