@@ -59,15 +59,43 @@ namespace BookHub.Pages.Book
             }
 
             // Update review data based on the book ID using the API
+            // Check if a review is available for the bookId
             using (var client = new HttpClient())
             {
-                var reviewJson = JsonConvert.SerializeObject(Review);
-                var content = new StringContent(reviewJson, System.Text.Encoding.UTF8, "application/json");
-
-                var response = await client.PostAsync($"https://localhost:7274/api/Reviews/{Book.Id}", content);
-                if (!response.IsSuccessStatusCode)
+                var reviewResponse = await client.GetAsync($"https://localhost:7274/api/Reviews/{id}?includeReviews=false");
+                if (reviewResponse.IsSuccessStatusCode)
                 {
-                    // Handle error scenario
+                    var reviewJson = await reviewResponse.Content.ReadAsStringAsync();
+                    ReviewModel existingReview = JsonConvert.DeserializeObject<ReviewModel>(reviewJson);
+
+                    // Update the Description property of the Review model
+                    if (existingReview != null)
+                    {
+                        existingReview.Description = Review.Description; // Assigning the new description
+
+                        // Review exists, update the existing review
+                        var existingReviewJson = JsonConvert.SerializeObject(existingReview);
+                        var existingReviewContent = new StringContent(existingReviewJson, Encoding.UTF8, "application/json");
+
+                        var updateReviewResponse = await client.PutAsync($"https://localhost:7274/api/Reviews/{id}", existingReviewContent);
+                        if (!updateReviewResponse.IsSuccessStatusCode)
+                        {
+                            // Handle error scenario for update
+                        }
+                }
+                else
+                {
+                    existingReview.Description = Review.Description;
+                    // Review doesn't exist, add a new review
+                    var newReviewJson = JsonConvert.SerializeObject(Review);
+                    var newReviewContent = new StringContent(newReviewJson, Encoding.UTF8, "application/json");
+
+                    var addReviewResponse = await client.PostAsync("https://localhost:7274/api/Reviews/addReview", newReviewContent);
+                    if (!addReviewResponse.IsSuccessStatusCode)
+                    {
+                          // Handle error scenario for addition
+                    }
+                }
                 }
             }
 
