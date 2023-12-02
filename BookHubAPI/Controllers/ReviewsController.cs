@@ -14,7 +14,7 @@ namespace ReviewHubAPI.Controllers
         private readonly IReviewRepository _reviewRepository;
         private readonly IBookRepository _bookRepository;
         private readonly IMapper _mapper;
-
+       
         public ReviewsController(IReviewRepository reviewRepository, IMapper mapper, IBookRepository bookRepository)
         {
             _reviewRepository = reviewRepository ?? throw new ArgumentNullException(nameof(reviewRepository));
@@ -69,12 +69,11 @@ namespace ReviewHubAPI.Controllers
             //{
             //    return NotFound();
             //}
-
+            // Ensure RevId (identity column) is not included in update process
+           
             var updatedReview = await _reviewRepository.UpdateReview(id, existingReview);
             var updatedReviewDto = _mapper.Map<ReviewDTO>(updatedReview);
             return Ok(updatedReviewDto);
-            //var updatedReviewDto = _mapper.Map<ReviewDTO>(updatedReview);
-            //return Ok(updatedReviewDto);
 
         }
 

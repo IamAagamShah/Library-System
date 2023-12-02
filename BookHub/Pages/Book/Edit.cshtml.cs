@@ -64,7 +64,7 @@ namespace BookHub.Pages.Book
                 var reviewJson = JsonConvert.SerializeObject(Review);
                 var content = new StringContent(reviewJson, System.Text.Encoding.UTF8, "application/json");
 
-                var response = await client.PostAsync($"https://localhost:7274/api/Reviews/addReview", content);
+                var response = await client.PostAsync($"https://localhost:7274/api/Reviews/{Book.Id}", content);
                 if (!response.IsSuccessStatusCode)
                 {
                     // Handle error scenario

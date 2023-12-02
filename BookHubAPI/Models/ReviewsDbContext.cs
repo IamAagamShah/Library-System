@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace BookHubAPI.Models
 {
@@ -14,7 +16,7 @@ namespace BookHubAPI.Models
         {
             modelBuilder.Entity<Review>()
                 .Property(r => r.RevId)
-                .ValueGeneratedOnAdd();
+                .ValueGeneratedOnAdd().Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
 
             // Other configurations for your entities can go here...
 
