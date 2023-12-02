@@ -62,7 +62,7 @@ namespace BookHub.Pages.Book
             // Check if a review is available for the bookId
             using (var client = new HttpClient())
             {
-                var reviewResponse = await client.GetAsync($"https://localhost:7274/api/Reviews/{id}?includeReviews=false");
+                var reviewResponse = await client.GetAsync($"https://localhost:7274/api/Reviews/{Review.Id}?includeReviews=false");
                 if (reviewResponse.IsSuccessStatusCode)
                 {
                     var reviewJson = await reviewResponse.Content.ReadAsStringAsync();
@@ -77,7 +77,7 @@ namespace BookHub.Pages.Book
                         var existingReviewJson = JsonConvert.SerializeObject(existingReview);
                         var existingReviewContent = new StringContent(existingReviewJson, Encoding.UTF8, "application/json");
 
-                        var updateReviewResponse = await client.PutAsync($"https://localhost:7274/api/Reviews/{id}", existingReviewContent);
+                        var updateReviewResponse = await client.PutAsync($"https://localhost:7274/api/Reviews/{Review.Id}", existingReviewContent);
                         if (!updateReviewResponse.IsSuccessStatusCode)
                         {
                             // Handle error scenario for update
