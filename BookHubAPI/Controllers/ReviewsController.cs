@@ -41,11 +41,11 @@ namespace ReviewHubAPI.Controllers
 
         [HttpPost]
         [Route("addReview")]
-        public async Task<ActionResult<ReviewDTO>> AddReview(ReviewDTO reviewDto)
+        public async Task<ActionResult<Review>> AddReview(ReviewDTO reviewDto)
         {
             var review = _mapper.Map<Review>(reviewDto);
             var addedReview = await _reviewRepository.AddReview(review);
-            return CreatedAtAction(nameof(GetReviewById), new { id = addedReview.RevId }, addedReview);
+            return CreatedAtAction(nameof(GetReviewById), new { id = addedReview.Id }, addedReview);
         }
 
         [HttpPut("{id}")]
@@ -69,7 +69,7 @@ namespace ReviewHubAPI.Controllers
             //{
             //    return NotFound();
             //}
-            // Ensure RevId (identity column) is not included in update process
+            // Ensure Id (identity column) is not included in update process
            
             var updatedReview = await _reviewRepository.UpdateReview(id, existingReview);
             var updatedReviewDto = _mapper.Map<ReviewDTO>(updatedReview);

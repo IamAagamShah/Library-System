@@ -11,7 +11,7 @@ namespace BookHub.Pages.Book
 {
     public class IndexModel : PageModel
     {
-        public List<BookModel> Books { get; set; } = new List<BookModel>(); // Assuming Book is your model class
+        public List<BookModel> Books { get; set; } =    new List<BookModel>(); // Assuming Book is your model class
 
         public async Task<IActionResult> OnGetAsync()
         {

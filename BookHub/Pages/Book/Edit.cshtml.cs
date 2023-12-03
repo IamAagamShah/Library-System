@@ -16,8 +16,11 @@ namespace BookHub.Pages.Book
         [BindProperty]
         public ReviewModel Review { get; set; } // Assuming Review is your model class
 
+        public string id { get; set; }
+
         public async Task<IActionResult> OnGetAsync(string id)
         {
+            this.id = id;
             // Retrieve book by ID from the API
             using (var client = new HttpClient())
             {
@@ -38,68 +41,73 @@ namespace BookHub.Pages.Book
                     var reviewJson = await reviewResponse.Content.ReadAsStringAsync();
                     Review = JsonConvert.DeserializeObject<ReviewModel>(reviewJson);
                 }
+                if (Review == null)
+                {
+                    Review = new ReviewModel(); // Or initialize it accordingly
+                }
             }
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string id)
         {
+            Review.Id = id;
+            Book.Id = id;
             // Update book by ID using the API
             using (var client = new HttpClient())
             {
                 var bookJson = JsonConvert.SerializeObject(Book);
-                var content = new StringContent(bookJson, System.Text.Encoding.UTF8, "application/json");
+                var content = new StringContent(bookJson, Encoding.UTF8, "application/json");
 
-                var response = await client.PostAsync($"https://localhost:7274/api/Book/{Book.Id}", content);
+                var response = await client.PutAsync($"https://localhost:7274/api/Book/{id}", content);
                 if (!response.IsSuccessStatusCode)
                 {
-                    // Handle error scenario
+                    // Handle error scenario for book update
                 }
             }
 
-            // Update review data based on the book ID using the API
-            // Check if a review is available for the bookId
+
             using (var client = new HttpClient())
             {
-                var reviewResponse = await client.GetAsync($"https://localhost:7274/api/Reviews/{Review.Id}?includeReviews=false");
+                // Check if a review exists with the provided Review.Id
+                var reviewResponse = await client.GetAsync($"https://localhost:7274/api/Reviews/{Review.Id}");
                 if (reviewResponse.IsSuccessStatusCode)
                 {
-                    var reviewJson = await reviewResponse.Content.ReadAsStringAsync();
-                    ReviewModel existingReview = JsonConvert.DeserializeObject<ReviewModel>(reviewJson);
+                    var existingReviewJson = await reviewResponse.Content.ReadAsStringAsync();
+                    var existingReview = JsonConvert.DeserializeObject<ReviewModel>(existingReviewJson);
 
-                    // Update the Description property of the Review model
+                    // Update the description if the review exists
                     if (existingReview != null)
                     {
-                        existingReview.Description = Review.Description; // Assigning the new description
+                        existingReview.Description = Review.Description;
 
-                        // Review exists, update the existing review
-                        var existingReviewJson = JsonConvert.SerializeObject(existingReview);
-                        var existingReviewContent = new StringContent(existingReviewJson, Encoding.UTF8, "application/json");
+                        var existingReviewJsonUpdated = JsonConvert.SerializeObject(existingReview);
+                        var existingReviewContent = new StringContent(existingReviewJsonUpdated, Encoding.UTF8, "application/json");
 
                         var updateReviewResponse = await client.PutAsync($"https://localhost:7274/api/Reviews/{Review.Id}", existingReviewContent);
                         if (!updateReviewResponse.IsSuccessStatusCode)
                         {
                             // Handle error scenario for update
                         }
+                    }
                 }
                 else
                 {
-                    existingReview.Description = Review.Description;
                     // Review doesn't exist, add a new review
                     var newReviewJson = JsonConvert.SerializeObject(Review);
                     var newReviewContent = new StringContent(newReviewJson, Encoding.UTF8, "application/json");
-
                     var addReviewResponse = await client.PostAsync("https://localhost:7274/api/Reviews/addReview", newReviewContent);
                     if (!addReviewResponse.IsSuccessStatusCode)
                     {
-                          // Handle error scenario for addition
+                        // Handle error scenario for addition
                     }
+
                 }
                 }
+                return RedirectToPage("./Index");
             }
 
-            return RedirectToPage("./Index");
         }
     }
-}
+

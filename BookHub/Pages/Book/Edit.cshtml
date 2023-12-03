@@ -52,6 +52,7 @@
         <label asp-for="Review.Description">Review</label>
         <textarea asp-for="Review.Description"></textarea>
     </div>
+    <div> <input type="hidden" name="id" value="@Model.Book.Id" /></div>
     <button type="submit">Save</button>
 </form>
 
