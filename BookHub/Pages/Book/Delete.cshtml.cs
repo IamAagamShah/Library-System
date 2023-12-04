@@ -21,7 +21,7 @@ namespace BookHub.Pages.Book
         {
             var httpClient = _httpClientFactory.CreateClient();
 
-            var response = await httpClient.GetAsync($"https://localhost:7274/api/Book/{id}");
+            var response = await httpClient.GetAsync($"https://localhost:32768/api/Book/{id}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -36,7 +36,7 @@ namespace BookHub.Pages.Book
         {
             var httpClient = _httpClientFactory.CreateClient();
 
-            var response = await httpClient.DeleteAsync($"https://localhost:7274/api/Book/{id}");
+            var response = await httpClient.DeleteAsync($"https://localhost:32768/api/Book/{id}");
 
             if (response.IsSuccessStatusCode)
             {

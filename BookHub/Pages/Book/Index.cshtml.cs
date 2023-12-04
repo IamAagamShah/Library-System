@@ -18,7 +18,7 @@ namespace BookHub.Pages.Book
             // Retrieve all books from the API
             using (var client = new HttpClient())
             {
-                var response = await client.GetAsync("https://localhost:7274/api/Book/getitems");
+                var response = await client.GetAsync("https://localhost:32768/api/Book/getitems");
                 if (response.IsSuccessStatusCode)
                 {
                     var booksJson = await response.Content.ReadAsStringAsync();

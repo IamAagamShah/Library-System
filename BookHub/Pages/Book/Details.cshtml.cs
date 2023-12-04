@@ -14,7 +14,7 @@ namespace BookHub.Pages.Book
             // Retrieve book by ID from the API
             using (var client = new HttpClient())
             {
-                var response = await client.GetAsync($"https://localhost:7274/api/Book/{id}");
+                var response = await client.GetAsync($"https://localhost:32768/api/Book/{id}");
                 if (response.IsSuccessStatusCode)
                 {
                     var bookJson = await response.Content.ReadAsStringAsync();

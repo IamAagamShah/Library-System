@@ -26,7 +26,7 @@ namespace BookHub.Pages.Book
             try
             {
                 var content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(Book), Encoding.UTF8, "application/json");
-                var response = await _client.PostAsync("https://localhost:7274/api/Book/addbook", content);
+                var response = await _client.PostAsync("https://localhost:32768/api/Book/addbook", content);
 
                 if (response.IsSuccessStatusCode)
                 {

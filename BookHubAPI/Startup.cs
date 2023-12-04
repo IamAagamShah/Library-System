@@ -26,11 +26,11 @@ namespace BookHubAPI
         {
             // Configure BookDbContext
             services.AddDbContext<BooksDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("BookDbContextConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("BooksDbForRds")));
 
             // Configure ReviewDbContext
             services.AddDbContext<ReviewsDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("ReviewDbContextConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("BooksDbForRds")));
 
             // Register repositories and services
             services.AddScoped<IBookRepository, BookRepository>();
