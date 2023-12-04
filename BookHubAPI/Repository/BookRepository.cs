@@ -53,15 +53,8 @@ namespace BookHubAPI.Repository
 
         public async Task<Book> AddBook(Book book)
         {
-            _context.Database.OpenConnection();
-            _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Reviews ON");
-
-            _context.Books.Add(book);
+             _context.Books.Add(book);
             await _context.SaveChangesAsync();
-
-            _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Reviews OFF");
-            _context.Database.CloseConnection();
-
             return book;
         }
 
