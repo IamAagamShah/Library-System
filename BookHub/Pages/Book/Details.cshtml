@@ -9,6 +9,16 @@
 <div>
     <h4>Title: @Model.Book.Title</h4>
     <p>Author: @Model.Book.Author</p>
+    <p>Subtitle: @Model.Book.Subtitle</p>
+    <p>ISBN: @Model.Book.ISBN</p>
+    <p>Description: @Model.Book.Description</p>
+    <p>Publish Date: @Model.Book.PublishDate</p>
+    <p>Page Count: @Model.Book.PageCount</p>
+    <p>Rating: @Model.Book.Rating</p>
+    <!-- Add more book details as needed -->
 </div>
 
-<a asp-page="./Edit" asp-route-id="@Model.Book.Id">Edit</a>
+<div class="mt-4">
+    <a asp-page="./Edit" asp-route-id="@Model.Book.Id" class="btn btn-primary">Edit</a>
+    <!-- Add more action buttons or links here -->
+</div>
